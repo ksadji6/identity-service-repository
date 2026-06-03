@@ -21,8 +21,11 @@ public class GlobalExceptionHandler{
 
     @ExceptionHandler (Exception.class)
     public ResponseEntity<Map<String, String>> handleException(Exception e){
+        //temporaire
+        e.printStackTrace();
         Map<String,String> error = new HashMap<>();
-        error.put("error", "Une erreur interne est survenue.");
+        error.put("error, Une erreur interne est survenue.", e.getMessage());
+        //error.put("error", "Une erreur interne est survenue.");
         error.put("status", "500");
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }

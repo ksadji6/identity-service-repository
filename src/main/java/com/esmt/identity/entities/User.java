@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import jakarta.persistence.*;
 
 
@@ -40,7 +37,8 @@ public class User {
     //first connection security
     @Column(name = "is_first_login",nullable = false)
     @JsonProperty("firstLogin")
-    private boolean isFirstLogin = true;
+    @Getter(value = lombok.AccessLevel.PUBLIC)
+    private Boolean isFirstLogin = true;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -51,7 +49,8 @@ public class User {
 
     @Column(nullable = false)
     @JsonProperty("enabled")
-    private boolean enabled = true;
+    @Getter(value = lombok.AccessLevel.PUBLIC)
+    private Boolean enabled = true;
 
 
 }

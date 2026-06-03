@@ -12,6 +12,7 @@
     import org.springframework.web.bind.annotation.*;
 
     import java.util.List;
+    import java.util.Map;
 
     @RestController
     @RequestMapping("/api/users")
@@ -23,9 +24,16 @@
         @PostMapping("/create")
         @PreAuthorize("hasRole('ADMIN')")
         @Operation(summary = "Créer un compte (Admin)", description = "Permet à l'administrateur de créer un nouvel utilisateur avec un mot de passe temporaire")
-        public ResponseEntity<User> createByAdmin(@Valid @RequestBody User user) {
+        public ResponseEntity<Map<String, Object>> createByAdmin(@Valid @RequestBody User user) {
+            User saved = userService.createAccountByAdmin(user);
+            return ResponseEntity.ok(Map.of(
+                    "id", saved.getId(),
+                    "email", saved.getEmail(),
+                    "message", "Compte créé avec succès"
+            ));
+        }/*public ResponseEntity<User> createByAdmin(@Valid @RequestBody User user) {
             return ResponseEntity.ok(userService.createAccountByAdmin(user));
-        }
+        }*/
 
         @GetMapping("/email/{email}")
         @PreAuthorize("hasAnyRole('ADMIN','INGENIEUR', 'CHEF_PROJET', 'PRESALES', 'SUPERVISEUR')")

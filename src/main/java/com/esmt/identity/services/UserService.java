@@ -38,7 +38,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(temporaryPassword));
 
         //mettre le isFirstLogin à True
-        user.setFirstLogin(true);
+        user.setIsFirstLogin(true);
         User savedUser= userRepository.save(user);
 
         //envoi du mail avec les accès temporaires
@@ -56,7 +56,7 @@ public class UserService {
         return userRepository.findByEmail(email)
                 .map(userToUpdate -> {
                     userToUpdate.setPassword(passwordEncoder.encode(newPassword));
-                    userToUpdate.setFirstLogin(false);
+                    userToUpdate.setIsFirstLogin(false);
                     return userRepository.save(userToUpdate);
                 })
                 .orElseThrow(() -> new UserNotFoundException("Aucun utilisateur avec l'email : " + email));
@@ -83,7 +83,7 @@ public class UserService {
                 .nom(user.getNom())
                 .prenom(user.getPrenom())
                 .role(user.getRole())
-                .isFirstLogin(user.isFirstLogin())
+                .isFirstLogin(user.getIsFirstLogin())
                 .build();
         return AuthResponse.builder()
                 .token(token)

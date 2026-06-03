@@ -14,7 +14,7 @@ public class UserResponse {
     private String prenom;
     private String nom;
     private Role role;
-    private boolean isFirstLogin; //ca sera pour declencher le popup
+    private Boolean isFirstLogin; //ca sera pour declencher le popup
 
 
 }

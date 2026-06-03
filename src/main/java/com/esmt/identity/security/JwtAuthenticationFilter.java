@@ -48,12 +48,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 //on verifie si le user existe
                 if (user != null) {
                     //on verifie si c'est actif/enable ou non
-                    if (!user.isEnabled()) {
+                    if (!user.getEnabled()) {
                         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                         response.getWriter().write("{\"error\": \"COMPTE_DESACTIVE\", \"message\": \"Votre compte a été suspendu par l'administrateur.\"}");
                         return;
                     }
-                    if (user.isFirstLogin()) {
+                    if (user.getIsFirstLogin()) {
                         //s'il ne change pas son mdp dans /update-password
                         if (!request.getRequestURI().contains("/api/auth/update-password")) {
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
