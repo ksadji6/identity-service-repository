@@ -30,11 +30,12 @@ public class JwtUtils {
     }
 
     //genere un token avec le role et l'id
-    public String generateToken(String email, String role, Long userId) {
+    public String generateToken(String email, String role, Long userId, boolean firstLogin) {
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role",role)
                 .claim("userId",userId)
+                .claim("firstLogin", firstLogin)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .setIssuer("identity-service")

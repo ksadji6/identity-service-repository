@@ -76,7 +76,7 @@ public class UserService {
             throw new BadCredentialsException("Mot de Passe incorrect");
         }
         //on génère le token
-        String token = jwtUtils.generateToken(user.getEmail(), user.getRole().name(), user.getId());
+        String token = jwtUtils.generateToken(user.getEmail(), user.getRole().name(), user.getId(), user.getIsFirstLogin());
         //transforme l'entité en dto
         UserResponse userDto= UserResponse.builder()
                 .email(user.getEmail())
