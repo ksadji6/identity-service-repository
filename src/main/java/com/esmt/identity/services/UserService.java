@@ -39,6 +39,7 @@ public class UserService {
 
         //mettre le isFirstLogin à True
         user.setIsFirstLogin(true);
+        user.setEnabled(true);
         User savedUser= userRepository.save(user);
 
         //envoi du mail avec les accès temporaires
@@ -79,6 +80,7 @@ public class UserService {
         String token = jwtUtils.generateToken(user.getEmail(), user.getRole().name(), user.getId(), user.getIsFirstLogin());
         //transforme l'entité en dto
         UserResponse userDto= UserResponse.builder()
+                .id(user.getId())
                 .email(user.getEmail())
                 .nom(user.getNom())
                 .prenom(user.getPrenom())
