@@ -35,6 +35,8 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/api/users/exists/**", "/api/users/verify/**").permitAll()
+                        .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "CHEF_PROJET", "SUPERVISEUR","PRESALES","INGENIEUR")
+                        .requestMatchers("/api/users/id/**").hasAnyRole("ADMIN", "SUPERVISEUR","INGENIEUR", "PRESALES", "CHEF_PROJET")
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .anyRequest().authenticated() //filtre
                 );
