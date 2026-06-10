@@ -47,6 +47,7 @@
         @PreAuthorize("hasAnyRole('ADMIN', 'CHEF_PROJET', 'PRESALES', 'SUPERVISEUR', 'INGENIEUR')")
         @Operation(summary = "Lister tous les utilisateurs", description = "Accès réservé aux administrateurs pour la vue d'ensemble du personnel")
         public ResponseEntity<List<User>> getAllUsers() {
+            System.out.println("DEBUG - Accès à /api/users/all par l'utilisateur connecté");
             return ResponseEntity.ok(userService.getAllUsers());
         }
     

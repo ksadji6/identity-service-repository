@@ -30,13 +30,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        //ouvert pour les tests
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/api/users/exists/**", "/api/users/verify/**").permitAll()
                         .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "CHEF_PROJET", "SUPERVISEUR","PRESALES","INGENIEUR")
-                        .requestMatchers("/api/users/id/**").hasAnyRole("ADMIN", "SUPERVISEUR","INGENIEUR", "PRESALES", "CHEF_PROJET")
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .anyRequest().authenticated() //filtre
                 );

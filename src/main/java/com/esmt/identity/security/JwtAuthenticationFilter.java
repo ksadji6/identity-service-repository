@@ -54,6 +54,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         return;
                     }
                     if (user.getIsFirstLogin()) {
+                        String uri = request.getRequestURI();
+                        // On autorise le changement de mot de passe ET les appels internes d'identification
+                        boolean isExempt = uri.contains("/api/auth/update-password")
+                                || uri.contains("/api/users/id/")
+                                || uri.contains("/api/users/verify/")
+                                || uri.contains("/api/users/exists/");
+
+                        if (!isExempt) {
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\": \"ACTIVATION_REQUISE\", \"message\": \"Veuillez changer votre mot de passe.\"}");
+                            return;
+                        }
+                    }
+                    /*if (user.getIsFirstLogin()) {
                         //s'il ne change pas son mdp dans /update-password
                         if (!request.getRequestURI().contains("/api/auth/update-password")) {
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -61,7 +76,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                             response.getWriter().write("{\"error\": \"ACTIVATION_REQUISE\", \"message\": \"Veuillez changer votre mot de passe temporaire pour accéder aux services.\"}");
                             return; //on bloque le reste tant qu'il ne change pas le mdp
                         }
-                    }
+                    }*/
 
                     //on crée l'objet d'authentification pour Spring uniquement si l'user est valide
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
